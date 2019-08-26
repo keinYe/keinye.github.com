@@ -14,19 +14,32 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: keinYe'Blog
+author: keinYe
 email: keinye.dev@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   不只为技术的技术人！
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://keinye.com" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: 
-github_username:  keinYe
+twitter_username:
+github_username: keinYe
+
+show_excerpts: true
+
+minima:
+  date_format: "%b %-d, %Y"
+  social_links:
+    github: keinYe
+
+
+#header_pages:
+# - about.md
 
 # Build settings
 markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
