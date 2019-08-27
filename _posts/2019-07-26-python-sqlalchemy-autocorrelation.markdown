@@ -1,0 +1,159 @@
+---
+layout: post
+title:  "SQLAlchemy 数据表自关联"
+date:   2019-07-26 21:37:22 +0800
+categories: python
+tags: [python, 数据库, SQLAlchemy]
+---
+![](https://lg-8wz4hass-1252833766.cos.ap-shanghai.myqcloud.com/pic/bright-ecology-environment-1645226.jpg)
+我们说数据表关系时，默认说的是数据表之间的关系「一对多、一对一、多对多等等」。而在实际应用中常常会遇到数据表内的关联，比如现在互联中的一个名词「关注者」和「被关注者」，他们都在用户范围内，只是两个用户之间的关系。
+
+> 关系是描述现实世界的实体及其之间各种联系的单一的数据结构。
+
+对于使用 SQLAlchemy 建立数据表之间的关系前面的文章 [SQLAlchemy 定义关系](https://mp.weixin.qq.com/s/YxMa2qSkUyn-UwyWcjI2FQ) 已经进行了介绍，今天主要看单个数据表之内的关联。
+
+## 数据表内的一对多关系
+数据表自关联的一对多关系，典型的就是父亲和子女的关系。我们通过在表中引用父亲的 id 来实现，然后通过反向链接来获取子女的信息。在这里我们使用 user 和其关注者来实现数据类。
+```python
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    followed_id = Column(Integer, ForeignKey("user.id"))
+    followers = relationship("User", remote_side=[id], backref='user')
+```
+在以上示例中，可以通过 follwers 来获取被关注者的信息，而被关注者可以通过反向链接来获取关注者的信息，在这里我们假设一个用户只能关注一个人，一个用户可以被多个用户关注。
+
+使用 SQLAlchemy 的完整示例代码如下：
+```python
+# -*- coding:utf-8 -*-
+
+from sqlalchemy import (
+    create_engine,
+    Column,
+    Integer,
+    String,
+    DateTime,
+    Text,
+    ForeignKey,
+    Table,
+    MetaData,
+)
+from sqlalchemy.orm import relationship,backref,sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    followed_id = Column(Integer, ForeignKey("user.id"))
+    followed = relationship("User", remote_side=[id], backref='user')
+
+engine = create_engine('sqlite:///./test.sqlite')
+db_session = sessionmaker(bind=engine)
+session = db_session()
+Base.metadata.create_all(engine)
+
+user1 = User(name='user1')
+user2 = User(name='user2')
+user3 = User(name='user3')
+session.add(user1)
+user2.followed = user1
+session.add(user2)
+user3.followed = user1
+session.add(user3)
+session.commit()
+
+user = session.query(User).filter(User.name == 'user2').first()
+print(user.name + 'followed:')
+print(user.followed.name)
+
+user = session.query(User).filter(User.name == 'user1').first()
+print(user.name + 'followers:')
+for n in user.user:
+    print(n.name)
+user4 = User(name='user4')
+user4.followed = user
+session.add(user4)
+session.commit()
+
+user = session.query(User).filter(User.name == 'user1').first()
+print(user.name + 'followers:')
+for n in user.user:
+    print(n.name)
+```
+以上示例的运行结果如下：
+```shell
+user2followers:
+user1
+user1followed:
+user2
+user3
+user1followed:
+user2
+user3
+user4
+```
+
+
+## 数据表内的多对多关系
+数据表内自关联多对多关系的实例那就更多了，比如完整的关注者和被关注者的关系、python 中父类与子类的关系等等。在 SQLAlchemy 中多对多的关系需要借助于关系表来实现，自关联多对多的关系也同样需要关联表，只是关联表中关联的是同一个数据表。
+```python
+followers = Table('followers', Base.metadata,
+    Column('follower_id', Integer, ForeignKey('user.id')),
+    Column('followed_id', Integer, ForeignKey('user.id'))
+)
+```
+建立关系表后，需要通过 relationship 来建立关系，在两个数据表的多对多关系中，只需要指定 secondary 参数为关系表即可，但是在自关联关系表中的 follower_id 和 follwed_id 指向的是同一个数据表的 id，SQLAlchemy 是无法区分二者的，此时我们需要通过其他的方法来加以区分。
+
+此时需要借助 relationship 的 primaryjoin 参数和 secondaryjoin 参数。primaryjoin 表达式描述了左表和连接表之间的连接, secondaryjoin 描述了连接表和右表之间的连接.
+
+```python
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    followed = relationship(
+        'User',
+        secondary=followers,
+
+        # primaryjoin 指明了右侧对象关联到左侧实体（关注者）的条件
+        # 也就是根据左侧实体查找出对应的右侧对象
+        # 执行 user.followed 时候就是这样的查找
+        primaryjoin=(followers.c.follower_id == id),
+
+        # secondaryjoin 指明了左侧对象关联到右侧实体（被关注者）的条件
+        # 也就是根据右侧实体找出左侧对象
+        # 执行 user.followers 时候就是这样的查找
+        secondaryjoin=(followers.c.followed_id == id),
+
+        # backref 定义了右侧实体如何访问该关系
+        # 也就是根据右侧实体查找对应的左侧对象
+        # 在左侧，关系被命名为 followed
+        # 在右侧使用 followers 来表示所有左侧用户的列表，即粉丝列表
+        backref=backref('followers', lazy='dynamic'),
+        lazy='dynamic'
+        )
+```
+在使用中我们可以通过 followed 来获取关注者列表，通过 followers 来获取被关注则列表。但是实际上 followed 和 followers 是两个不同的 SQL 语句，我们可以通过 print 来打印者两个语句，语句的内容如下：
+
+1. user.followed 内容如下
+```shell
+SELECT user.id AS user_id, user.name AS user_name
+FROM user, followers
+WHERE followers.follower_id = ? AND followers.followed_id = user.id
+```
+
+2. user.followers 内容如下
+```shell
+SELECT user.id AS user_id, user.name AS user_name
+FROM user, followers
+WHERE followers.followed_id = ? AND followers.follower_id = user.id
+```
+
+    `           
