@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "使用 Vue 建立第一个前端项目"
+title:  "使用 Flask 创建 RESTful 服务"
 date:   2019-10-16 20:57:22 +0800
 categories: Flask
 tags: [python, flask, RESTful, SQLAlchemy, API]
