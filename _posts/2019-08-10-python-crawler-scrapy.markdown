@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第十篇 爬虫框架 Scrapy"
 date:   2019-08-10 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/11.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 前面几个章节利用 python 的基础库实现网络数据的获取、解构以及存储，同时也完成了简单的数据读取操作。在这个过程中使用了其他人完成的功能库来加快我们的爬虫实现过程，对于爬虫也有相应的 python 框架供我们使用「不重复造轮子是程序员的一大特点」，当我们了解爬虫的实现过程以后就可以尝试使用框架来完成自己的爬虫，加快开发速度。

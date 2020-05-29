@@ -2,8 +2,12 @@
 layout: post
 title:  "外行学 python 爬虫 第二篇 获取内容"
 date:   2019-05-02 21:37:22 +0800
-categories: python
 tags: [python, 外行, 爬虫]
+author: keinYe
+categories: [ python ]
+image: assets/images/2.jpg
+beforetoc: "一个无法获取内容的爬虫不是一个真正的爬虫，爬虫的首要目标是从网络上获取内容."
+toc: true
 ---
 一个无法获取内容的爬虫不是一个真正的爬虫，爬虫的首要目标是从网络上获取内容。目前我们所看到的网页都是通过超文本传输协议「英语：HyperText Transfer Protocol，缩写：HTTP」在服务器和客户端之间进行数据交换。
 

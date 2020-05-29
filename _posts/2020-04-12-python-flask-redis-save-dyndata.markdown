@@ -2,7 +2,12 @@
 layout: post
 title:  "Flask 使用 Redis 存储动态数据"
 date:   2020-04-12 21:34:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/10.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, Redis, Flask]
 ---
 

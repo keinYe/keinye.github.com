@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第九篇 读取数据库中的数据"
 date:   2019-07-19 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/9.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 前面的一至八篇我们一直在研究如何从网站上快速、方便的获取数据，并将获取到的数据存储在数据库中。但是将数据存储在数据中并不是我们的目的，获取和存储数据的目的是为了更好的利用这些数据，利用这些数据的前提首先需要从数据库按一定的格式来读取数据，这一篇主要介绍如何实现通过 RESTful API 来获取数据库中的数据。

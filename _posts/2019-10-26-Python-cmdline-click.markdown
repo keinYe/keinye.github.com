@@ -2,7 +2,11 @@
 layout: post
 title:  "Python 命令行神器 Click"
 date:   2019-10-26 20:57:22 +0800
-categories: Flask
+author: keinYe
+categories: [ Flask ]
+image: assets/images/16.jpg
+beforetoc: "."
+toc: true
 tags: [python, flask, Click]
 ---
 

@@ -1,0 +1,202 @@
+I"� <blockquote>
+  <p>在计算机学中，反射（英语：reflection）是指计算机程序在运行时（runtime）可以访问、检测和修改它本身状态或行为的一种能力。[1]用比喻来说，反射就是程序在运行的时候能够“观察”并且修改自己的行为。</p>
+</blockquote>
+
+<p>以上是维基百科中对反射的解释。我的理解反射是在运行过程中，获取和修改未知对象的属性和方法的一种解决方案。</p>
+
+<p>反射在一定程度上提供了灵活性和通用性，是程序在运行过程中根据实际需要执行额外的操作。同时反射降低了代码的可读性，为团队间的协作制造了一定的障碍。</p>
+
+<p>反射广泛应用于软件测试中，在运行中创建和实例化对象，并操作属性和方法。</p>
+
+<h2 id="python-中的反射">Python 中的反射</h2>
+<p>Python 中反射的方法：</p>
+<ul>
+  <li><code>hasattr(obj, name)</code>: 判断对象中是否有以 name 命名的属性或方法。</li>
+  <li><code>getattr(obj, name)</code>: 获取对象中以 name 命名的属性或方法，如果是属性获取到将是属性的值，如果是方法获取到的是方法的实例。</li>
+  <li><code>setattr(obj, name, value)</code>: 为对象设置一个以 value 为值以 name 为名的属性或方法。</li>
+  <li><code>delattr(obj, name)</code>: 删除对象中以 name 为名称的属性或方法。</li>
+  <li><code>dir([obj])</code>: 该方法返回对象大多数属性名的列表。</li>
+</ul>
+
+<p>反射中方法的使用示例：</p>
+<pre><code class="language-python">class Test():
+    def __init__(self, name):
+        self.name = name
+
+    def say(self):
+        print('Hello ' + self.name)
+
+test = Test("keinYe")
+if hasattr(test, 'name'):
+    print('name = %s' % getattr(test, 'name'))
+    setattr(test, 'name', 'python')
+    print('name = %s' % getattr(test, 'name'))
+else:
+    print("The attribute 'name' not exist in Test")
+
+delattr(test, 'name')
+if not hasattr(test, 'name'):
+    print('name is deleted')
+    setattr(test, 'name', 'python')
+    print('name = %s' % getattr(test, 'name'))
+
+attr = dir(test)
+print(attr)
+</code></pre>
+<p>运行以上代码，你将得到以下结果：</p>
+<pre><code class="language-shell">name = keinYe
+name = python
+name is deleted
+name = python
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'name', 'say']
+</code></pre>
+<p>在使用 <code>dir</code> 函数获取对象的属性和方法时，我们得到很多以 <code>__</code> 开头和结尾的属性，我们本身并没有定义这些属性，这些属性是 python 自动添加的，它们保存了对象的元数据，我们可以去读取这些属性，但是尽量不要修改他们，以免引起不必要的错误。</p>
+
+<h3 id="判断获取到的对象是否是方法函数">判断获取到的对象是否是方法/函数</h3>
+<p>通过反射获取到的对象有属性也有方法或函数，可以通过以下方法判断获取到的对象是否是方法或函数。</p>
+<ol>
+  <li>判断是否具有 <code>__call__</code> 属性
+    <pre><code class="language-python">add = lambda a, b:a+b
+if hasattr(add, '__call__'):
+    print(add(1, 2))
+</code></pre>
+  </li>
+  <li>利用 <code>callable</code> 判断
+    <pre><code class="language-python">if callable(add):
+    print(add(1, 2))
+</code></pre>
+  </li>
+  <li>利用 <code>inspect</code> 模块中的 <code>isfunction</code> 函数判断
+    <pre><code class="language-python">from inspect import isfunction
+if isfunction(add):
+    print(add(1, 2))
+</code></pre>
+    <blockquote>
+      <p>注意：<code>isfunction</code> 函数无法判断类中的方法。</p>
+    </blockquote>
+
+    <p>Python的inspect模块包含了大量的与反射、元数据相关的工具函数。</p>
+  </li>
+  <li>使用<code>types.MethodType</code> 或 <code>types.FunctionType</code> 来判断。
+以下代码无效
+    <pre><code>from inspect import isfunction
+import types
+
+class Test():
+    def __init__(self, name):
+        self.name = name
+
+    def say(self):
+        print('Hello ' + self.name)
+
+test = Test("keinYe")
+print(type(test.say))
+print(type(isfunction))
+print(type(print))
+if isinstance(isfunction, types.FunctionType):
+    print(True)
+if isinstance(test.say, types.MethodType):
+    print(True)
+if isinstance(print, types.BuiltinMethodType):
+    print(True)   
+</code></pre>
+    <p>以上代码输出结果</p>
+    <pre><code class="language-shell">&lt;class 'method'&gt;
+&lt;class 'function'&gt;
+&lt;class 'builtin_function_or_method'&gt;
+True
+True
+True
+</code></pre>
+    <blockquote>
+      <p>注意：<code>print</code> 等 python 内置函数/方法，使用 <code>type</code> 函数获取到的类型将是 <code>&lt;class 'builtin_function_or_method'&gt;</code>。</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h3 id="方法函数的使用">方法/函数的使用</h3>
+
+<p>当使用反射获取到方法或函数的对象后，可以直接在后加上括号进行访问「前提是该函数没有参数」。</p>
+<pre><code class="language-python">func = getattr(test, 'say')
+if hasattr(func, '__call__'):
+    func()
+</code></pre>
+
+<p>如果方法/函数有参数，那么以上调用方法将会报 <code>TypeError</code>。那么我们如果来获取函数的参数呢，使用 <code>inspect</code> 模块的 <code>getfullargspec</code> 函数来获取参数列表。</p>
+<pre><code>func = getattr(test, 'say')
+if hasattr(func, '__call__'):
+    args = inspect.getfullargspec(func)
+    print(args.args)
+</code></pre>
+<p>执行以上代码，将得到以下结果：</p>
+<pre><code class="language-shell">['self']
+</code></pre>
+<p>由于 <code>say</code> 是类方法，其第一个参数总是 <code>self</code>，此时如果我们在 <code>say</code> 方法上新增一个参数，我们可以看到获取到的参数列表的变化。</p>
+<pre><code class="language-python">class Test():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def say(self, time):
+        print('Hello ' + self.name)
+
+test = Test('keinYe', 20)
+
+func = getattr(test, 'say')
+if hasattr(func, '__call__'):
+    args = inspect.getfullargspec(func)
+    print(args.args)
+</code></pre>
+<p>此时我们将得到 <code>say</code> 方法的两个参数 <code>self</code> 和 <code>time</code>。</p>
+
+<h2 id="反射的应用">反射的应用</h2>
+<p>在使用 python 进行网络通信时，不可避免的会使用到 json 格式，那么将一个类转换为 json 或将一个 json 转换为类对象，如果每次都手动将类属性转换为 json 数据，那么将是一个非常费力不讨好的工作，我们可以使用反射来实现，让每个数据类继承这些方法，即可实现一次编程到处使用。</p>
+
+<p>以下是示例代码：</p>
+<pre><code>import json
+
+class Base(object):
+    def to_json(self):
+        attrs = dir(self)
+        json_dict = {}
+        for attr in attrs:
+            if attr.startswith('_') or attr.endswith('_'):
+                continue
+            attr_obj = getattr(self, attr)
+            if hasattr(attr_obj, '__call__'):
+                continue
+            json_dict[attr] = attr_obj
+        return json.dumps(json_dict)
+
+    def to_object(self, json_str):
+        json_dict = json.loads(json_str)
+        attrs = dir(self)
+        for attr in attrs:
+            if attr.startswith('_') or attr.endswith('_'):
+                continue
+            if hasattr(attr, '__call__'):
+                continue
+            if attr in json_dict:
+                setattr(self, attr, json_dict.get(attr))            
+
+class Person(Base):
+    def __init__(self, name=None, age=None):
+        self.name = name
+        self.age = age
+    
+    def say(self):
+        print('name = %s, age = %s' % (self.name, self.age))
+
+person1 = Person('keinYe', 25)
+print(person1.to_json())
+person2 = Person()
+json_str = '{"name":"test", "age": 27}'
+person2.to_object(json_str)
+person2.say()
+</code></pre>
+<p>执行以上代码将得到以下结果：</p>
+<pre><code class="language-shell">{"age": 25, "name": "keinYe"}
+name = None, age = None
+name = test, age = 27
+</code></pre>
+:ET

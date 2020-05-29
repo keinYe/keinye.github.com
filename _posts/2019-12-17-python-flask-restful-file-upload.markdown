@@ -2,7 +2,11 @@
 layout: post
 title:  "RESTful 创建文件接收 API"
 date:   2019-12-17 20:57:22 +0800
-categories: Flask
+author: keinYe
+categories: [ Flask ]
+image: assets/images/2.jpg
+beforetoc: "."
+toc: true
 tags: [python, flask, RESTful, 文件上传]
 ---
 文件「文本、文档、图片等等」是一个服务器不可缺少的部分，在 [使用 Flask 创建 RESTful 服务](https://mp.weixin.qq.com/s/kR6oiyYGDdhhpD9HGMy7ZA) 介绍了如何使用 Flask 创建一个支持 RESTful API 的服务器。这篇文章介绍如何使用 RESTful API 来完成文件的接收，并将文件保存在静态目录下。

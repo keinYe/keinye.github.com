@@ -2,7 +2,11 @@
 layout: post
 title:  "Python 编程必不可少的测试框架「unittest 篇」"
 date:   2020-01-09 20:57:22 +0800
-categories: Python
+author: keinYe
+categories: [ Flask ]
+image: assets/images/3.jpg
+beforetoc: "."
+toc: true
 tags: [python, 测试, RESTful, Flask]
 ---
 

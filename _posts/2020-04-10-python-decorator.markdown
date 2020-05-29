@@ -2,7 +2,12 @@
 layout: post
 title:  "python 装饰器"
 date:   2020-04-10 07:50:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/9.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, module, Flask, 装饰器]
 ---
 

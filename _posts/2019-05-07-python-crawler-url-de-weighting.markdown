@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第四篇 URL 去重"
 date:   2019-05-07 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/4.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 

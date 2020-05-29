@@ -1,0 +1,3 @@
+I"�<p><img src="https://lg-8wz4hass-1252833766.cos.ap-shanghai.myqcloud.com/pic/bright-ecology-environment-1645226.jpg" alt="" />
+我们说数据表关系时，默认说的是数据表之间的关系「一对多、一对一、多对多等等」。而在实际应用中常常会遇到数据表内的关联，比如现在互联中的一个名词「关注者」和「被关注者」，他们都在用户范围内，只是两个用户之间的关系。</p>
+:ET

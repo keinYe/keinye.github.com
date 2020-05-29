@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第十一篇 数据可视化"
 date:   2019-08-23 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/12.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 在 [外行学 Python 爬虫 第九篇 读取数据库中的数据](https://mp.weixin.qq.com/s/ZPn3qXBVURtpKXGvtAU2nA) 中完成了使用 API 从数据库中读取所需要的数据，但是返回的是 JSON 格式，看到的是一串的字符串数据不是很好理解，这篇将介绍如何将数据进行可视化。

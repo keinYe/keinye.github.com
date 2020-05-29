@@ -2,7 +2,12 @@
 layout: post
 title:  "Flask 统计在线人数"
 date:   2020-02-23 20:57:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/6.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, redis, RESTful, Flask]
 ---
 

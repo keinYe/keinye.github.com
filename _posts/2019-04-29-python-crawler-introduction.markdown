@@ -1,9 +1,11 @@
 ---
 layout: post
 title:  "外行学 python 爬虫 第一篇 介绍"
-date:   2019-04-29 21:37:22 +0800
-categories: python
-tags: [python, 外行, 爬虫]
+author: keinYe
+categories: [ python ]
+image: assets/images/1.jpg
+beforetoc: "看好人工智能、数据分析等行业未来的发展趋势，学习 python 来熟悉相关知识."
+toc: true
 ---
 
 为什么标题叫做“外行学 Python 爬虫”？是因为本人非 IT 互联网从业人员，唯一能说得上关系的是本人是一个 C 的开发人员，从事的是与嵌入式相关的工作，即与互联网无关，也与数据分析无关。那么为什么要学 Python 爬虫呢？原因一、多一门技能增加自己的职业竞争力。原因二、提升自己的生存「赚钱」能力。

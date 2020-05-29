@@ -2,7 +2,11 @@
 layout: post
 title:  "SQLAlchemy 数据表自关联"
 date:   2019-07-26 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/10.jpg
+beforetoc: "."
+toc: true
 tags: [python, 数据库, SQLAlchemy]
 ---
 ![](https://lg-8wz4hass-1252833766.cos.ap-shanghai.myqcloud.com/pic/bright-ecology-environment-1645226.jpg)

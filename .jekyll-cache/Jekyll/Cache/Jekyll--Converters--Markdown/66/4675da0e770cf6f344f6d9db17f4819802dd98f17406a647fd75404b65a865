@@ -1,0 +1,12 @@
+I"�
+<ul>
+  <li><a href="#alembic-的应用">Alembic 的应用</a>
+    <ul>
+      <li><a href="#创建-alembic-迁移环境">创建 Alembic 迁移环境</a></li>
+      <li><a href="#生成迁移脚本">生成迁移脚本</a></li>
+      <li><a href="#变更数据库">变更数据库</a></li>
+    </ul>
+  </li>
+  <li><a href="#在-flask-中使用-alembic">在 Flask 中使用 Alembic</a></li>
+</ul>
+:ET

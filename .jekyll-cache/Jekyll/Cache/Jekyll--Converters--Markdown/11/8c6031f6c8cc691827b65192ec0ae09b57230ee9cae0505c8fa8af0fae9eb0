@@ -1,0 +1,10 @@
+I"�<p>Python 中操作 Excel 的扩展库主要有：</p>
+<ul>
+  <li><a href="https://docs.xlwings.org/zh_CN/latest/quickstart.html"><strong><em>xlwings</em></strong></a>：在 GitHub 上获得了 1.6k 的 Star。 可结合 VBA 实现对 Excel 的编程。</li>
+  <li><a href="https://www.osgeo.cn/openpyxl/tutorial.html"><strong><em>openpyxl</em></strong></a>：代码托管在 Bitbucket 上 https://bitbucket.org/openpyxl/openpyxl/src/default/。 简单易用，功能广泛，还支持图表功能，但是对 VBA 支持不好。</li>
+  <li><a href="http://pandas.pydata.org/"><strong><em>pandas</em></strong></a>：在 GitHub 上获得了 23.8k 的 Star。主要用于数据处理。</li>
+  <li><a href="http://pythonexcels.com/python-excel-mini-cookbook/"><strong><em>win32com</em></strong></a>：在 GitHub 上获得了 2.1k  的 Star。==仅支持 window 系统==</li>
+  <li><a href="https://xlsxwriter.readthedocs.io/"><strong><em>xlsxwriter</em></strong></a>：在 GitHub 上获得了 2.1k  的 Star。同 openpyxl 的功能相似，但是不能打开/修改已有文件。</li>
+  <li><a href="https://pypi.python.org/pypi/xlutils/"><strong><em>xlutils</em></strong></a>：仅支持 xls 文件及 excel 2003 及以前版本。</li>
+</ul>
+:ET

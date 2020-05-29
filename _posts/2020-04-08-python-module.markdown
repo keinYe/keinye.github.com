@@ -2,7 +2,12 @@
 layout: post
 title:  "python 模块"
 date:   2020-04-08 07:35:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/7.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, module, Flask]
 ---
 

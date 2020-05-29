@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第五篇 数据存储"
 date:   2019-05-13 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/5.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 前面一至四篇我们学习了如何使用 python 来获取网页并将网页中的有效数据解析出来，当获取到有效数据以后，不可能将数据放在内存中，一旦系统出现问题辛辛苦苦获取的数据都付诸东流了，此时需要考虑数据持久化的事情，数据持久化我们有两种选择一是将数据保存在文件中「比如 txt 文件或 execl 文件」，另一种是将数据保存在数据库中。

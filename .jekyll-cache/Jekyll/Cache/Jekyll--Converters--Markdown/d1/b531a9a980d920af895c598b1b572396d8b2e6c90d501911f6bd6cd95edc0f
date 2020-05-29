@@ -1,0 +1,190 @@
+I"�"<p>Python 中操作 Excel 的扩展库主要有：</p>
+<ul>
+  <li><a href="https://docs.xlwings.org/zh_CN/latest/quickstart.html"><strong><em>xlwings</em></strong></a>：在 GitHub 上获得了 1.6k 的 Star。 可结合 VBA 实现对 Excel 的编程。</li>
+  <li><a href="https://www.osgeo.cn/openpyxl/tutorial.html"><strong><em>openpyxl</em></strong></a>：代码托管在 Bitbucket 上 https://bitbucket.org/openpyxl/openpyxl/src/default/。 简单易用，功能广泛，还支持图表功能，但是对 VBA 支持不好。</li>
+  <li><a href="http://pandas.pydata.org/"><strong><em>pandas</em></strong></a>：在 GitHub 上获得了 23.8k 的 Star。主要用于数据处理。</li>
+  <li><a href="http://pythonexcels.com/python-excel-mini-cookbook/"><strong><em>win32com</em></strong></a>：在 GitHub 上获得了 2.1k  的 Star。==仅支持 window 系统==</li>
+  <li><a href="https://xlsxwriter.readthedocs.io/"><strong><em>xlsxwriter</em></strong></a>：在 GitHub 上获得了 2.1k  的 Star。同 openpyxl 的功能相似，但是不能打开/修改已有文件。</li>
+  <li><a href="https://pypi.python.org/pypi/xlutils/"><strong><em>xlutils</em></strong></a>：仅支持 xls 文件及 excel 2003 及以前版本。</li>
+</ul>
+
+<p>每个扩展库的功能都有其侧重点，根据所需要的功能，选择所需的扩展库即可。这里主要介绍通过 xlwings 对 Excel 文件进行操作。</p>
+
+<p>选择 xlwings 的几个原因：</p>
+<ul>
+  <li>工作系统同时兼容 Windows 和 Mac ，支持 WPS 文件。</li>
+  <li>语法简单，基本上用过一次就会记住。</li>
+  <li>功能齐全，支持新建、打开、修改、保存等等。</li>
+  <li>可以调用已有的 VBA 程序（这个暂时我还没有用到）。</li>
+</ul>
+
+<blockquote>
+  <p>通过 <code>pip install xlwings</code> 来安装 xlwings，当前最新版本是 0.18.0</p>
+</blockquote>
+
+<p>xlwings 的口号是：”==让 Excel 跑的飞快==”，感觉有点意思。它是基于 BSD-licensed(伯克利软件发行版许可协议) 的Python库，它让Python和Excel之间的相互调用变得更加容易。</p>
+
+<h4 id="新建文件">新建文件</h4>
+<p>通过以下命令来新建一个 Excel 文件</p>
+<pre><code class="language-python">import xlwings as xw
+
+wb = xw.Book() # or xw.books()
+wb.save('test.xlsx')
+</code></pre>
+<p>或另一种方式</p>
+<pre><code class="language-python">import xlwings as xw
+
+app = xw.App()
+
+try:
+    wb = app.books.add()
+    wb.save('test.xlsx')
+    wa.close()
+except Exception as err:
+    print(err)
+app.quite()
+</code></pre>
+
+<h4 id="打开已有文件">打开已有文件</h4>
+<p>通过以下命令来打开一个已有文件</p>
+<pre><code class="language-pyhon">import xlwings as xw
+
+wb = xw.Book('test.xlsx') # ro xw.bookx('test.xlsx')
+</code></pre>
+<blockquote>
+  <p>在上面的示例中使用的相对路径，你也可以使用绝对路径。
+当在 windows 上使用时，注意 “" 的转义问题，推荐直接在路径字符串上加 r 「r’g:\python\test.xlsx」
+。</p>
+</blockquote>
+
+<p>也可以使用另外一种方式</p>
+<pre><code class="language-python">import xlwings as xw
+
+app = xw.App()
+path = r'g:\python\test.xlsx
+try:
+    wb = app.books.open(path)
+    wb.save()
+    wa.close()
+except Exception as err:
+    print(err)
+app.quite()
+</code></pre>
+
+<h4 id="读取并修改文件内容">读取并修改文件内容</h4>
+<p>Excel 文件是由一个个工作表组成的，要想操作文件内容，需要先打开工作表「sheet」，打开 sheet 由以下几种方式：</p>
+<pre><code class="language-python">sheet = wb.sheets[0]       #下标定位打开第一个工作表
+sheet = wb.sheets['test']  #打开名字为 test 的工作表
+sheet = wb.sheets.active   #打开当前激活的工作表
+</code></pre>
+<p>工作表是由一个个单元格组成的，最终我们操作的是一个个单元格中的数据，接下来一块来看下单元的数据操作。</p>
+<pre><code class="language-python">sheet = wb.sheets[0]
+sheet.range('A1').value = 1     #向 A1 单元格写入 1
+print(sheet.range('A1').value)  #读取 A1 单元格中的内容
+# 1.0
+</code></pre>
+<blockquote>
+  <p>根据单元格里面存储的是数字、字符串、空白还是日期，返回的 python 对象类型分别是 float, unicode, None 或 datetime</p>
+</blockquote>
+
+<p>前面操作的是单个单元格，接下来我们来操作一行或一列</p>
+<pre><code class="language-python">sheet.range('A1').value = [1, 2, 3, 4, 5]  #向 A1:E1 写入数据
+print(sheet.range('A1:E1').value)          #读取 A1:E1 的数据
+# [1.0, 2.0, 3.0, 4.0, 5.0]
+</code></pre>
+<p><code>sheet.range('xx').value</code> 默认按行写入数据，那么如果我们想要按列写入数据怎么办，按列写入数据有以下两种方法。</p>
+<pre><code class="language-python">sheet.range('A1').value = [[1],[2],[3],[4],[5]]
+print(sheet.range('A1:A5').value) 
+# [1.0, 2.0, 3.0, 4.0, 5.0]
+# 或者使用下面的方法
+sheet.range('A1').options(transpose=True).value = [6, 7, 8, 9, 10]
+print(sheet.range('A1:A5').value) 
+# [6.0, 7.0, 8.0, 9.0, 10.0]
+</code></pre>
+<p>大多数情况下，我们操作数据表写入的都是多行的数据，由上面的基础实际上多行数据就是一个二维的列表，一次写入和读取多行的方法如下：</p>
+<pre><code class="language-python">sheet.range('A1').value = [['Foo 1', 'Foo 2', 'Foo 3'], [10, 20, 30]]
+print(sheet.range('A1:C2').value)
+# [['Foo 1', 'Foo 2', 'Foo 3'], [10.0, 20.0, 30.0]]
+print(sheet.range((1, 1), (2, 3)).value)
+# [['Foo 1', 'Foo 2', 'Foo 3'], [10.0, 20.0, 30.0]]
+</code></pre>
+<p>但是 xlwings 还提供了另外一种更加方便的方式来操作一个区域块，通过 expand 或 options 中的 expand 参数，expand 使用的是当前已获取的区域对象，而 options 中的 expand 参数在条用时才计算区域对象，推荐使用 options 中的 expand 参数，是你可以在更改区域后及时获取区域的变化。下面的代码，可以清楚的表达两种方式的不同。</p>
+<pre><code class="language-python">sheet.range('A1').value = [[1,2], [3,4]]
+rng1 = sheet.range('A1').expand('table') 
+rng2 = sheet.range('A1').options(expand='table')
+print(rng1.value)
+# [[1.0, 2.0], [3.0, 4.0]]
+print(rng2.value)
+# [[1.0, 2.0], [3.0, 4.0]]
+sheet.range('A3').value = [5, 6]
+print(rng1.value)
+# [[1.0, 2.0], [3.0, 4.0]]
+print(rng2.value)
+# [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]]
+</code></pre>
+
+<p>以下是一个完整的例子：</p>
+<pre><code class="language-python">import xlwings as xw
+
+wb = xw.Book()
+sheet = wb.sheets[0]
+sheet.range('A1').value = [1, 2, 3, 4, 5]
+sheet.range('A2').value = ['a', 'b', 'c']
+rng1 = sheet.range('a1').expand('table')
+val = rng1.value
+print(val)
+
+for i in val:
+    if isinstance(i, list):
+        for j in i:
+            print('value=%s, type=%s' %(str(j), type(j)))
+    else:
+     print(i)
+
+count = rng1.columns.count
+sum = 0
+value = sheet[0, :count].value
+for i in sheet[0, :count].value:
+    sum = sum + i;
+value.append(sum)
+sheet.range('A1').value = value
+rng2 = sheet.range('A1').options(expand='table')
+print(rng2.value)
+print(rng1.value)
+
+wb.save('test.xlsx')
+wb.close()
+</code></pre>
+
+<p>运行以后的输入结果如下：</p>
+<pre><code class="language-shell">[[1.0, 2.0, 3.0, 4.0, 5.0], ['a', 'b', 'c', None, None]]
+value=1.0, type=&lt;class 'float'&gt;
+value=2.0, type=&lt;class 'float'&gt;
+value=3.0, type=&lt;class 'float'&gt;
+value=4.0, type=&lt;class 'float'&gt;
+value=5.0, type=&lt;class 'float'&gt;
+value=a, type=&lt;class 'str'&gt;
+value=b, type=&lt;class 'str'&gt;
+value=c, type=&lt;class 'str'&gt;
+value=None, type=&lt;class 'NoneType'&gt;
+value=None, type=&lt;class 'NoneType'&gt;
+[[1.0, 2.0, 3.0, 4.0, 5.0, 15.0], ['a', 'b', 'c', None, None, None]]
+[[1.0, 2.0, 3.0, 4.0, 5.0], ['a', 'b', 'c', None, None]]
+</code></pre>
+<p>程序运行完成后，在当前文件下将看到一个 test.xlsx 的 Excel 文件，文件内容如下：</p>
+
+<h4 id="其他">其他</h4>
+<ul>
+  <li>清除单元格内容和格式 <code>sheet.range('A1').clear()</code></li>
+  <li>单元格的列标 <code>sheet.range('A1').column</code></li>
+  <li>单元格的行标 <code>sheet.range('A1').row</code></li>
+  <li>单元格的行高 <code>sheet.range('A1').row_height</code></li>
+  <li>单元格的列宽 <code>sheet.range('A1').column_width</code></li>
+  <li>列宽自适应 <code>sheet.range('A1').columns.autofit()</code></li>
+  <li>行高自适应 <code>sheet.range('A1').rows.autofit()</code></li>
+  <li>单元格背景色(RGB) <code>sheet.range('A1').color = (34,139,34)</code></li>
+  <li>清除单元格颜色 <code>sheet.range('A1').color = None</code></li>
+  <li>输入公式，相应单元格会出现计算结果 <code>sheet.range('A1').formula='=SUM(A1:E1)</code></li>
+  <li>获取单元格公式 <code>sheet.range('A1').formula_array</code></li>
+</ul>
+:ET

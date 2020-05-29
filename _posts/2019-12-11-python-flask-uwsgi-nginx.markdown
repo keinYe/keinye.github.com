@@ -2,7 +2,11 @@
 layout: post
 title:  "使用 uWSGI + Nginx 部署 Flask 应用"
 date:   2019-12-11 20:57:22 +0800
-categories: Flask
+author: keinYe
+categories: [ Flask ]
+image: assets/images/1.jpg
+beforetoc: "."
+toc: true
 tags: [python, flask, uWSIG, Nginx]
 ---
 

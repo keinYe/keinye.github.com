@@ -2,7 +2,11 @@
 layout: post
 title:  "Python 数据库迁移工具 Alembic"
 date:   2019-11-05 20:57:22 +0800
-categories: Flask
+author: keinYe
+categories: [ Flask ]
+image: assets/images/17.jpg
+beforetoc: "."
+toc: true
 tags: [python, flask, Alembic, SQLAlchemy]
 ---
 Alembic 是一款轻量型的数据库迁移工具，它与 [SQLAlchemy](https://mp.weixin.qq.com/s/QF41i58djnn-Hb6n8vbjew) 一起共同为 Python 提供数据库管理与迁移支持。

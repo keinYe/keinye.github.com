@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第七篇 开启多线程"
 date:   2019-06-18 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/7.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 经过上一篇文章[外行学 Python 爬虫 第六篇 动态翻页](https://mp.weixin.qq.com/s/xBEKaYyAGE_2rS8-b27uKw)我们实现了网页的动态的分页，此时我们可以爬取立创商城所有的原件信息了，经过几十个小时的不懈努力，一共获取了 16万+ 条数据，但是软件的效率实在是有点低了，看了下获取 10 万条数据的时间超过了 56 个小时，平均每分钟才获取 30 条数据。

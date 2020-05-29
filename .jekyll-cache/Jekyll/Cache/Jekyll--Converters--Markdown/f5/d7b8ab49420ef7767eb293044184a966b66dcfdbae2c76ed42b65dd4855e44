@@ -1,0 +1,2 @@
+I"z<p>文件「文本、文档、图片等等」是一个服务器不可缺少的部分，在 <a href="https://mp.weixin.qq.com/s/kR6oiyYGDdhhpD9HGMy7ZA">使用 Flask 创建 RESTful 服务</a> 介绍了如何使用 Flask 创建一个支持 RESTful API 的服务器。这篇文章介绍如何使用 RESTful API 来完成文件的接收，并将文件保存在静态目录下。</p>
+:ET

@@ -2,7 +2,11 @@
 layout: post
 title:  "为 Flask 添加用户登录"
 date:   2019-09-09 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/13.jpg
+beforetoc: "."
+toc: true
 tags: [python, flask, login, 用户管理, API]
 ---
 Flask 是什么？我想打开这篇文章的你应该不陌生，但是我还引用维基百科上的内容做个简短的介绍。

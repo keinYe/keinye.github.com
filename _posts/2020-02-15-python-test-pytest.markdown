@@ -2,7 +2,12 @@
 layout: post
 title:  "Python 编程必不可少的测试框架「pytest 篇」"
 date:   2020-02-15 20:57:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/4.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, 测试, RESTful, Flask]
 ---
 

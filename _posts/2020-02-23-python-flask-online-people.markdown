@@ -2,7 +2,12 @@
 layout: post
 title:  "Python 库 xlwings 操作 Excel 文档"
 date:   2020-03-02 20:57:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/5.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, redis, RESTful, Flask]
 ---
 

@@ -2,7 +2,12 @@
 layout: post
 title:  "python 反射"
 date:   2020-04-09 07:35:22 +0800
-categories: Python
+author: keinYe
+categories: [ Python ]
+image: assets/images/8.jpg
+beforetoc: "."
+toc: true
+rating: 4
 tags: [python, module, Flask, 反射]
 ---
 

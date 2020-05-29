@@ -2,7 +2,11 @@
 layout: post
 title:  "外行学 python 爬虫 第八篇 功能优化"
 date:   2019-07-05 21:37:22 +0800
-categories: python
+author: keinYe
+categories: [ python ]
+image: assets/images/8.jpg
+beforetoc: "."
+toc: true
 tags: [python, 外行, 爬虫]
 ---
 在前一篇中讲了如何开启多线程来加快爬虫的爬取速度，本节主要对爬虫爬取内容机型优化，将生产商信息单独独立出来作为一张数据库表，不再仅仅是存储一个生产商的名称，同时保存了生产商的网址和介绍。
