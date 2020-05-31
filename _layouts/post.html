@@ -20,8 +20,8 @@ post_class: post-template
             {% endif %}
         </div>            
         <div>
-        Written by <a target="_blank" class="text-dark" href="{{ author.web }}">{{ author.display_name }}</a> on 
-        <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}">{{ page.date | date_to_string }}</time></span>           
+        <a target="_blank" class="text-dark" href="{{ author.web }}">{{ author.display_name }}</a> 完成于 
+        <span class="post-date"><time class="post-date" datetime="{{ page.date | date:"%Y-%m-%d" }}">{{ page.date | date:"%Y 年 %m 月 %d 日" }}</time></span>           
         {% if page.last_modified_at %}
         (Updated: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date: "%b %-d, %Y" }}</time>)
         {% endif %}
@@ -55,7 +55,7 @@ post_class: post-template
 {% include comments.html %}
 
 <!-- Share -->
-{% include share.html %}
+<!-- {% include share.html %} -->
 
 <!-- Related Post -->
 {% include related-posts.html %}
